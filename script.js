@@ -32,11 +32,7 @@
 
 const searchURL = 'https://api.github.com/users/';
 
-const options = {
-  headers: new Headers({
-    "Accept": "application/vnd.github.nebula-preview+json",
-  }),
-};
+
 
 //////////////////////////////////////////////////////////////
 // SEPERATION OF CONCERNS: TYPES OF FUNCTIONS
@@ -57,11 +53,18 @@ function init() {
 // (MISC) FETCH DATA /////////////////////////////////////////
 
 function fetchGitHubUser(searchTerm) {
-  const params = {
-    owner.login: searchTerm,
-  }
 
-  .fetch(url, options)
+  const queryString = `${searchTerm}/repos`;
+  const url = searchURL + queryString;
+  console.log(url);
+
+  const options = {
+    headers: new Headers({
+      "Accept": "application/vnd.github.nebula-preview+json",
+    }),
+  };
+
+  fetch(url, options)
     .then(response => {
       if (!response.ok) {
         throw new Error(response.statusText);
@@ -72,10 +75,11 @@ function fetchGitHubUser(searchTerm) {
       console.log(data);
       renderResults(data);
     })
-    .clear(err => {
+    .catch(err => {
       console.log(err);
     });
 }
+
 
 // TEMPLATE GENERATORS ///////////////////////////////////////
 
@@ -84,8 +88,7 @@ function generateQuery() {
 }
 
 function generateResults(data) {
-  // map object into array
-  // join array into string
+  
 }
 
 
@@ -102,10 +105,18 @@ function renderResults(data) {
 
 function handleSubmission() {
   // listen for submit and get (event.target).val();
-  // event.preventDefault();
-  // if valid input text
-  // empty <section> DOM view, if need be
-  // fetchGitHubUser(searchTerm)
+    $('#search').on('submit', event => {
+      event.preventDefault();
+      const searchTerm = $('#js-search-username').val();
+      if (!searchTerm) {
+        console.log('nothing entered in input field');
+      }
+      console.log(searchTerm);
+      $('.js-results').empty();
+      fetchGitHubUser(searchTerm);
+    });
+  
+
 
 }
 
