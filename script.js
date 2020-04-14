@@ -13,7 +13,7 @@
 
 // generate/render/display in the DOM... 
 // user name
-    // "owner"."login"
+    // "owner.login"
 // list of repos associated with that username handle
     // "name"
 // with links to each repo URL
@@ -31,3 +31,84 @@
 
 
 const searchURL = 'https://api.github.com/users/';
+
+const options = {
+  headers: new Headers({
+    "Accept": "application/vnd.github.nebula-preview+json",
+  }),
+};
+
+//////////////////////////////////////////////////////////////
+// SEPERATION OF CONCERNS: TYPES OF FUNCTIONS
+// (Miscellaneous): Fetch Data
+// Template Generators
+// Rendering Functions
+// Event Handlers
+//////////////////////////////////////////////////////////////
+
+
+// INIT /////////////////////////////////////////////////////
+function init() {
+  handleSubmission();
+
+}
+
+
+// (MISC) FETCH DATA /////////////////////////////////////////
+
+function fetchGitHubUser(searchTerm) {
+  const params = {
+    owner.login: searchTerm,
+  }
+
+  .fetch(url, options)
+    .then(response => {
+      if (!response.ok) {
+        throw new Error(response.statusText);
+      }
+      return response.json();
+    })
+    .then(data => {
+      console.log(data);
+      renderResults(data);
+    })
+    .clear(err => {
+      console.log(err);
+    });
+}
+
+// TEMPLATE GENERATORS ///////////////////////////////////////
+
+function generateQuery() {
+
+}
+
+function generateResults(data) {
+  // map object into array
+  // join array into string
+}
+
+
+// RENDERING FUNCTIONS ///////////////////////////////////////
+
+function renderResults(data) {
+  // pass data to generateResults
+  const results = generateResults(data);
+  // render HTML into DOM
+  $('section').html(results);
+}
+
+// EVENT HANDLERS ////////////////////////////////////////////
+
+function handleSubmission() {
+  // listen for submit and get (event.target).val();
+  // event.preventDefault();
+  // if valid input text
+  // empty <section> DOM view, if need be
+  // fetchGitHubUser(searchTerm)
+
+}
+
+
+//
+$(init);
