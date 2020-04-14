@@ -9,17 +9,23 @@
     src: https://courses.thinkful.com/async-web-apps-v2/checkpoint/6#assignment
   -->
   <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/normalize/8.0.1/normalize.min.css" integrity="sha256-l85OmPOjvil/SOvVt3HnSSjzF1TUMyT9eV0c2BzEGzU=" crossorigin="anonymous" />
+  <link rel="stylesheet" href="style.css">
 </head>
 
 <body>
   <main>
+    <h1>GitHub Profile Finder</h1>
 
+    <form>
+      <label for="search-username">GitHub username</label>
+      <input type="text" name="search-username" id="js-search-username" placeholder="enter username..." required>
+      <input type="submit" value="Search">
+    </form>
 
-
-
-
-
-
+    <section class="js-results hidden">
+      <h2 class="js-user">[User Name]'s Repos</h2>
+      <ul class="repos"></ul>
+    </section>
 
   </main>
 
