@@ -88,8 +88,21 @@ function generateQuery() {
 }
 
 function generateResults(data) {
+  $('.js-repos').empty();
+  console.log(data.length);
   
-}
+  for(let i = 0; i < data.length; i++) {
+    // `<h2 class="js-user">${data[i].owner.login}'s Repos</h2>`
+    // render HTML into DOM
+    
+    $('.js-repos').append(
+      `<li>
+        <a href="${data[i].html_url}">${data[i].name}</a>
+      </li>
+    `)
+  };
+  $('.js-results').removeClass('hidden');
+};
 
 
 // RENDERING FUNCTIONS ///////////////////////////////////////
@@ -97,8 +110,13 @@ function generateResults(data) {
 function renderResults(data) {
   // pass data to generateResults
   const results = generateResults(data);
+
+  // RIGHT NOW RENDERING IN generateResults()
+
   // render HTML into DOM
-  $('section').html(results);
+  // $('.js-results').removeClass('hidden');
+  // $('.js-repos').empty();
+  // $('.js-repos').append(results);
 }
 
 // EVENT HANDLERS ////////////////////////////////////////////
@@ -112,7 +130,6 @@ function handleSubmission() {
         console.log('nothing entered in input field');
       }
       console.log(searchTerm);
-      $('.js-results').empty();
       fetchGitHubUser(searchTerm);
     });
   
