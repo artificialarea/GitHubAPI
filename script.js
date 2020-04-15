@@ -46,7 +46,6 @@ const searchURL = 'https://api.github.com/users/';
 // INIT /////////////////////////////////////////////////////
 function init() {
   handleSubmission();
-
 }
 
 
@@ -77,6 +76,10 @@ function fetchGitHubUser(searchTerm) {
     })
     .catch(err => {
       console.log(err);
+      $('.error-msg').text(`${err}!`);
+      $('#js-search-username').val('');
+      $('.js-user').empty();
+      $('.js-repos').empty();
     });
 }
 
@@ -88,20 +91,25 @@ function generateQuery() {
 }
 
 function generateResults(data) {
+  $('.js-user').empty();
   $('.js-repos').empty();
-  console.log(data.length);
-  
+
+  $('.js-user').html(
+    `<h2 class="js-user">${data[0].owner.login}'s Repos</h2>`
+  );
+
   for(let i = 0; i < data.length; i++) {
-    // `<h2 class="js-user">${data[i].owner.login}'s Repos</h2>`
+    // 
     // render HTML into DOM
     
     $('.js-repos').append(
       `<li>
-        <a href="${data[i].html_url}">${data[i].name}</a>
+        <a href="${data[i].html_url}" target="_blank">${data[i].name}</a>
       </li>
     `)
   };
   $('.js-results').removeClass('hidden');
+  $('#js-search-username').val('');
 };
 
 
@@ -126,15 +134,9 @@ function handleSubmission() {
     $('#search').on('submit', event => {
       event.preventDefault();
       const searchTerm = $('#js-search-username').val();
-      if (!searchTerm) {
-        console.log('nothing entered in input field');
-      }
-      console.log(searchTerm);
       fetchGitHubUser(searchTerm);
+      $('.error-msg').empty(); // if applicable
     });
-  
-
-
 }
 
 
